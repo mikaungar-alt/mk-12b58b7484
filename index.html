@@ -15,66 +15,84 @@
   --brand:#8a4b32; --brand-soft:#f3ece1; --line:#e6dccd;
   --gold:#e8c97d; --gold-soft:#fffbf2;
   --ok:#3f7d55; --ok-soft:#eaf4ed; --bad:#b04a3f; --bad-soft:#fbeceb;
+  --on-brand:#fff;
 }
-:root:not([data-theme="light"]){}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#1c1917; --card:#252220; --ink:#ede7de; --muted:#9c9287;
   --brand:#e0a183; --brand-soft:#332b26; --line:#3b3430;
   --gold:#8a7239; --gold-soft:#2b2620;
   --ok:#7fc194; --ok-soft:#22302a; --bad:#e08a80; --bad-soft:#332323;
+  --on-brand:#1c1917;
 }}
 *{box-sizing:border-box}
 body{margin:0;font-family:Heebo,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-text-size-adjust:100%}
 .wrap{max-width:1180px;margin:0 auto;padding:22px 16px 70px}
-
 header{text-align:center;padding:26px 0 18px}
 header h1{margin:0;font-size:clamp(26px,6vw,40px);font-weight:800;letter-spacing:-.6px;color:var(--brand)}
 header p{margin:8px 0 0;color:var(--muted);font-size:15px}
-
 nav{display:flex;gap:8px;justify-content:center;margin:20px 0 26px;flex-wrap:wrap}
 nav button{font:inherit;font-weight:700;font-size:16px;cursor:pointer;border:1px solid var(--line);
   background:var(--card);color:var(--ink);padding:11px 24px;border-radius:999px;transition:.15s}
 nav button:hover{border-color:var(--brand)}
-nav button[aria-selected="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
+nav button[aria-selected="true"]{background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
 
-/* ---------- TREE ---------- */
+/* ---------- שער ---------- */
+.gate{max-width:420px;margin:40px auto;background:var(--card);border:1px solid var(--line);
+  border-radius:22px;padding:34px 26px;text-align:center}
+.gate p{color:var(--muted);font-size:15px;margin:0 0 20px}
+.gate input{font:inherit;font-size:19px;font-weight:600;text-align:center;width:100%;
+  background:var(--bg);border:1.5px solid var(--line);color:var(--ink);border-radius:14px;padding:14px;outline:none}
+.gate input:focus{border-color:var(--brand)}
+.gate button{font:inherit;font-size:17px;font-weight:700;cursor:pointer;width:100%;margin-top:11px;
+  background:var(--brand);color:var(--on-brand);border:0;border-radius:14px;padding:14px}
+.gate .err{color:var(--bad);font-size:14.5px;font-weight:600;margin-top:13px;min-height:20px}
+
+/* ---------- עץ ---------- */
 .clan{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 18px;margin-bottom:22px}
 .clan-name{text-align:center;font-size:clamp(21px,4.5vw,27px);font-weight:800;color:var(--brand)}
 .clan-note{text-align:center;font-size:14px;color:var(--muted);margin-top:4px}
-.roots{display:flex;gap:10px;justify-content:center;align-items:center;margin:20px 0 0;flex-wrap:wrap}
-.root{background:var(--brand);color:#fff;border-radius:16px;padding:12px 22px;text-align:center;min-width:180px}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .root{color:#1c1917}}
+.roots{display:flex;gap:10px;justify-content:center;align-items:stretch;margin:20px 0 0;flex-wrap:wrap}
+.root{background:var(--brand);color:var(--on-brand);border-radius:16px;padding:14px 22px;text-align:center;min-width:180px}
 .root .n{font-size:19px;font-weight:700}
 .root .m{font-size:12.5px;opacity:.85;margin-top:2px}
-.dia{color:var(--line);font-size:19px;font-weight:700}
+.dia{color:var(--line);font-size:19px;font-weight:700;align-self:center}
 .foot{text-align:center;font-size:13.5px;color:var(--muted);margin-top:12px;font-style:italic}
 .stem{width:3px;height:22px;background:var(--line);margin:16px auto 0;border-radius:2px}
-.branches{display:grid;gap:14px;margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
-.branches.narrow{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));max-width:820px;margin-inline:auto}
+.branches{display:grid;gap:14px;margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.branches.narrow{grid-template-columns:repeat(auto-fit,minmax(250px,1fr));max-width:840px;margin-inline:auto}
 .branch{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:15px 13px}
 .branch.mine{border-color:var(--gold);background:var(--gold-soft)}
 .branch h3{margin:0;font-size:16.5px;font-weight:800;color:var(--brand);text-align:center}
 .loc{text-align:center;font-size:12.5px;color:var(--muted);margin-top:3px;font-weight:600}
-.pair{display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap}
-.p{background:var(--brand-soft);border-radius:10px;padding:5px 11px;font-size:15px;font-weight:600}
-.p.blood{background:var(--brand);color:#fff}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .p.blood{color:#1c1917}}
-.kids{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;display:flex;flex-direction:column;gap:6px}
-.kid{font-size:14.5px;text-align:center}
+.pair{display:flex;gap:7px;justify-content:center;margin-top:11px;flex-wrap:wrap}
+.p{background:var(--brand-soft);border-radius:12px;padding:5px 11px 5px 6px;font-size:15px;font-weight:600;
+   display:inline-flex;align-items:center;gap:6px}
+.p.blood{background:var(--brand);color:var(--on-brand)}
+.kids{margin-top:12px;border-top:1px dashed var(--line);padding-top:11px;display:flex;flex-direction:column;gap:8px}
+.kid{font-size:14.5px;display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap}
 .kid b{font-weight:700}
-.kid i{font-style:normal;color:var(--muted);font-size:13px}
-.kid .me{background:var(--gold-soft);border:1px solid var(--gold);border-radius:9px;padding:2px 9px;display:inline-block}
+.kid i{font-style:normal;color:var(--muted);font-size:13px;display:inline-flex;align-items:center;gap:4px}
+.kid .me{background:var(--gold-soft);border:1px solid var(--gold);border-radius:10px;padding:2px 8px;
+  display:inline-flex;align-items:center;gap:5px}
 .bnote{font-size:12.5px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.5}
 .legend{text-align:center;font-size:13.5px;color:var(--muted);margin-top:8px;padding:0 6px}
 .legend b{color:var(--brand)}
+.av{border-radius:50%;object-fit:cover;object-position:center 22%;background:var(--brand-soft);
+  flex:none;display:inline-block}
+.av-l{width:62px;height:62px;border:2px solid rgba(255,255,255,.5);margin:0 auto 8px;display:block}
+.av-m{width:30px;height:30px}
+.av-s{width:27px;height:27px}
+.av-x{width:22px;height:22px}
 
-/* ---------- QUIZ ---------- */
+/* ---------- חידון ---------- */
 .quiz{max-width:640px;margin:0 auto}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 20px}
 .meta{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--muted);font-weight:600}
 .track{height:7px;background:var(--brand-soft);border-radius:99px;margin:11px 0 22px;overflow:hidden}
 .fill{height:100%;background:var(--brand);border-radius:99px;transition:width .35s ease;width:0}
-.qtext{font-size:clamp(19px,4.6vw,24px);font-weight:700;line-height:1.45;min-height:64px}
+.qtext{font-size:clamp(19px,4.6vw,24px);font-weight:700;line-height:1.45}
+.qimg{display:block;width:clamp(150px,44vw,210px);height:clamp(150px,44vw,210px);border-radius:50%;
+  object-fit:cover;object-position:center 22%;margin:18px auto 4px;border:3px solid var(--line)}
 .opts{display:flex;flex-direction:column;gap:9px;margin-top:20px}
 .opt{font:inherit;font-size:17px;font-weight:600;text-align:start;cursor:pointer;
   background:var(--bg);border:1.5px solid var(--line);color:var(--ink);
@@ -90,10 +108,11 @@ nav button[aria-selected="true"]{background:var(--brand);color:#fff;border-color
 .verdict{font-size:16px;font-weight:700;margin-bottom:12px}
 .verdict.r{color:var(--ok)} .verdict.w{color:var(--bad)}
 .next{font:inherit;font-size:17px;font-weight:700;cursor:pointer;width:100%;
-  background:var(--brand);color:#fff;border:0;border-radius:14px;padding:14px}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .next{color:#1c1917}}
+  background:var(--brand);color:var(--on-brand);border:0;border-radius:14px;padding:14px}
 .next.ghost{background:transparent;color:var(--brand);border:1.5px solid var(--line);margin-top:9px}
-
+.startp{text-align:center}
+.startp h2{font-size:23px;margin:0 0 6px}
+.startp p{color:var(--muted);margin:0 0 22px;font-size:15px}
 .score{text-align:center}
 .score .big{font-size:60px;font-weight:800;color:var(--brand);line-height:1.1}
 .score .of{font-size:17px;color:var(--muted);font-weight:600}
@@ -101,20 +120,8 @@ nav button[aria-selected="true"]{background:var(--brand);color:#fff;border-color
 .score p{color:var(--muted);margin:0 0 22px}
 .missed{text-align:start;margin:22px 0;border-top:1px solid var(--line);padding-top:18px}
 .missed h3{font-size:15px;color:var(--muted);margin:0 0 12px;font-weight:700}
-.missed div{font-size:14.5px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.missed div{font-size:14.5px;padding:9px 0;border-bottom:1px dashed var(--line);display:flex;align-items:center;gap:9px}
 .missed b{color:var(--brand)}
-
-.gate{max-width:420px;margin:40px auto;background:var(--card);border:1px solid var(--line);
-  border-radius:22px;padding:34px 26px;text-align:center}
-.gate p{color:var(--muted);font-size:15px;margin:0 0 20px}
-.gate input{font:inherit;font-size:19px;font-weight:600;text-align:center;width:100%;
-  background:var(--bg);border:1.5px solid var(--line);color:var(--ink);
-  border-radius:14px;padding:14px;outline:none}
-.gate input:focus{border-color:var(--brand)}
-.gate button{font:inherit;font-size:17px;font-weight:700;cursor:pointer;width:100%;margin-top:11px;
-  background:var(--brand);color:#fff;border:0;border-radius:14px;padding:14px}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gate button{color:#1c1917}}
-.gate .err{color:var(--bad);font-size:14.5px;font-weight:600;margin-top:13px;min-height:20px}
 .hidden{display:none}
 </style>
 </head>
@@ -132,69 +139,91 @@ nav button[aria-selected="true"]{background:var(--brand);color:#fff;border-color
   <button id="gobtn" type="button">כניסה</button>
   <div class="err" id="err"></div>
 </div>
+
 <div id="app" class="hidden">
-<nav role="tablist">
-  <button id="tab-tree" role="tab" aria-selected="true" onclick="show('tree')">🌳 העץ המשפחתי</button>
-  <button id="tab-quiz" role="tab" aria-selected="false" onclick="show('quiz')">❓ החידון</button>
-</nav>
+  <nav role="tablist">
+    <button id="tab-tree" role="tab" aria-selected="true" onclick="show('tree')">🌳 העץ המשפחתי</button>
+    <button id="tab-quiz" role="tab" aria-selected="false" onclick="show('quiz')">❓ החידון</button>
+  </nav>
 
-<section id="view-tree"></section>
+  <section id="view-tree"></section>
 
-<section id="view-quiz" class="quiz hidden">
-  <div class="panel" id="qpanel">
-    <div class="meta"><span id="counter">שאלה 1</span><span id="running">0 נכונות</span></div>
-    <div class="track"><div class="fill" id="fill"></div></div>
-    <div class="qtext" id="qtext"></div>
-    <div class="opts" id="opts"></div>
-    <div class="after" id="after">
-      <div class="verdict" id="verdict"></div>
-      <button class="next" id="nextbtn" onclick="next()">השאלה הבאה</button>
+  <section id="view-quiz" class="quiz hidden">
+    <div class="panel startp" id="startpanel">
+      <h2>מוכן?</h2>
+      <p id="startsub"></p>
+      <button class="next" onclick="startQuiz('full')" id="btn-full"></button>
+      <button class="next ghost" onclick="startQuiz('short')">סיבוב קצר — 20 שאלות</button>
     </div>
-  </div>
-  <div class="panel score hidden" id="scorepanel"></div>
-</section>
+    <div class="panel hidden" id="qpanel">
+      <div class="meta"><span id="counter"></span><span id="running"></span></div>
+      <div class="track"><div class="fill" id="fill"></div></div>
+      <div class="qtext" id="qtext"></div>
+      <img class="qimg hidden" id="qimg" alt="">
+      <div class="opts" id="opts"></div>
+      <div class="after" id="after">
+        <div class="verdict" id="verdict"></div>
+        <button class="next" id="nextbtn" onclick="next()">השאלה הבאה</button>
+      </div>
+    </div>
+    <div class="panel score hidden" id="scorepanel"></div>
+  </section>
 </div>
 
 </div>
 <script>
-/* ============ DATA ============ */
-let CLANS=[], QUESTIONS=[], ME='', LEGEND='';
+let CLANS=[], QUESTIONS=[], PHOTOS={}, FACES=[], ME='', LEGEND='', SOLVER='';
 
-/* ============ TREE ============ */
+/* ============ עץ ============ */
+const img=(key,cls)=> PHOTOS[key] ? '<img class="av '+cls+'" src="'+PHOTOS[key]+'" alt="">' : '';
+
 function drawTree(){
-  let h = "";
-  for (const c of CLANS){
-    h += '<div class="clan"><div class="clan-name">'+c.name+'</div><div class="clan-note">'+c.note+'</div><div class="roots">';
-    h += c.roots.map(r=>'<div class="root"><div class="n">'+r.n+'</div><div class="m">'+r.m+'</div></div>').join('<div class="dia">◆</div>');
-    h += '</div><div class="foot">'+c.foot+'</div><div class="stem"></div><div class="branches'+(c.narrow?' narrow':'')+'">';
-    for (const b of c.branches){
-      h += '<div class="branch'+(b.mine?' mine':'')+'"><h3>'+b.t+'</h3>'+(b.loc?'<div class="loc">📍 '+b.loc+'</div>':'')+'<div class="pair">';
-      h += b.pair.map(p=>'<span class="p'+(p[1]?' blood':'')+'">'+p[0]+'</span>').join('');
-      h += '</div>';
-      if (b.kids && b.kids.length){
-        h += '<div class="kids">';
-        for (const k of b.kids){
-          const inner = '<b>'+k[0]+'</b>'+(k[1]?' <i>· '+k[1]+'</i>':'');
-          h += '<div class="kid">'+(k[0]===ME ? '<span class="me">'+inner+'</span>' : inner)+'</div>';
-        }
-        h += '</div>';
+  let h='';
+  CLANS.forEach((c,ci)=>{
+    h+='<div class="clan"><div class="clan-name">'+c.name+'</div><div class="clan-note">'+c.note+'</div><div class="roots">';
+    h+=c.roots.map((r,ri)=>'<div class="root">'+img('r:'+ci+':'+ri,'av-l')+'<div class="n">'+r.n+'</div><div class="m">'+r.m+'</div></div>').join('<div class="dia">◆</div>');
+    h+='</div><div class="foot">'+c.foot+'</div><div class="stem"></div><div class="branches'+(c.narrow?' narrow':'')+'">';
+    c.branches.forEach((b,bi)=>{
+      h+='<div class="branch'+(b.mine?' mine':'')+'"><h3>'+b.t+'</h3>'+(b.loc?'<div class="loc">📍 '+b.loc+'</div>':'')+'<div class="pair">';
+      h+=b.pair.map((p,pi)=>'<span class="p'+(p[1]?' blood':'')+'">'+img('p:'+ci+':'+bi+':'+pi,'av-m')+'<span>'+p[0]+'</span></span>').join('');
+      h+='</div>';
+      if(b.kids&&b.kids.length){
+        h+='<div class="kids">';
+        b.kids.forEach((k,ki)=>{
+          const inner=img('k:'+ci+':'+bi+':'+ki,'av-s')+'<b>'+k[0]+'</b>'+
+            (k[1]?'<i>· '+img('s:'+ci+':'+bi+':'+ki,'av-x')+k[1]+'</i>':'');
+          h+='<div class="kid">'+(k[0]===ME?'<span class="me">'+inner+'</span>':inner)+'</div>';
+        });
+        h+='</div>';
       }
-      if (b.note) h += '<div class="bnote">'+b.note+'</div>';
-      h += '</div>';
-    }
-    h += '</div></div>';
-  }
-  h += '<div class="legend">'+LEGEND+'</div>';
-  document.getElementById('view-tree').innerHTML = h;
+      if(b.note) h+='<div class="bnote">'+b.note+'</div>';
+      h+='</div>';
+    });
+    h+='</div></div>';
+  });
+  h+='<div class="legend">'+LEGEND+'</div>';
+  document.getElementById('view-tree').innerHTML=h;
 }
 
-/* ============ QUIZ ============ */
-const shuffle = a => { a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
-let deck=[], idx=0, score=0, missed=[], locked=false;
+/* ============ חידון ============ */
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+let deck=[], idx=0, score=0, missed=[], locked=false, started=false;
 
-function startQuiz(){
-  deck = shuffle(QUESTIONS).map(q=>({q:q[0], a:q[1], opts:shuffle([q[1],...q[2]])}));
-  idx=0; score=0; missed=[]; locked=false;
+function buildPool(){
+  const text=QUESTIONS.map(q=>({q:q[0],a:q[1],opts:shuffle([q[1],...q[2]])}));
+  const pool=FACES.filter(f=>f.name!==SOLVER);
+  const pics=pool.map(f=>{
+    const others=shuffle(pool.filter(o=>o.name!==f.name)).slice(0,3).map(o=>o.name);
+    return {q:'מי זה בתמונה?',img:PHOTOS[f.key],a:f.name,opts:shuffle([f.name,...others])};
+  });
+  return text.concat(pics);
+}
+
+function startQuiz(mode){
+  const all=shuffle(buildPool());
+  deck = mode==='short' ? all.slice(0,20) : all;
+  idx=0;score=0;missed=[];locked=false;started=true;
+  document.getElementById('startpanel').classList.add('hidden');
   document.getElementById('scorepanel').classList.add('hidden');
   document.getElementById('qpanel').classList.remove('hidden');
   render();
@@ -202,125 +231,132 @@ function startQuiz(){
 
 function render(){
   locked=false;
-  const item = deck[idx];
-  document.getElementById('counter').textContent = 'שאלה '+(idx+1)+' מתוך '+deck.length;
-  document.getElementById('running').textContent = score+' נכונות';
-  document.getElementById('fill').style.width = (idx/deck.length*100)+'%';
-  document.getElementById('qtext').textContent = item.q;
+  const it=deck[idx];
+  document.getElementById('counter').textContent='שאלה '+(idx+1)+' מתוך '+deck.length;
+  document.getElementById('running').textContent=score+' נכונות';
+  document.getElementById('fill').style.width=(idx/deck.length*100)+'%';
+  document.getElementById('qtext').textContent=it.q;
+  const im=document.getElementById('qimg');
+  if(it.img){ im.src=it.img; im.classList.remove('hidden'); } else { im.classList.add('hidden'); im.removeAttribute('src'); }
   document.getElementById('after').classList.remove('on');
-  document.getElementById('nextbtn').textContent = (idx === deck.length-1) ? 'לתוצאה הסופית' : 'השאלה הבאה';
-  const box = document.getElementById('opts');
-  box.innerHTML = '';
-  item.opts.forEach(o=>{
-    const b = document.createElement('button');
+  document.getElementById('nextbtn').textContent=(idx===deck.length-1)?'לתוצאה הסופית':'השאלה הבאה';
+  const box=document.getElementById('opts'); box.innerHTML='';
+  it.opts.forEach(o=>{
+    const b=document.createElement('button');
     b.className='opt'; b.type='button';
-    b.innerHTML = '<span>'+o+'</span><span class="mark"></span>';
-    b.onclick = ()=>answer(b,o);
+    b.innerHTML='<span>'+o+'</span><span class="mark"></span>';
+    b.onclick=()=>answer(b,o);
     box.appendChild(b);
   });
 }
 
 function answer(btn,choice){
-  if(locked) return; locked=true;
-  const item = deck[idx];
-  const right = choice === item.a;
-  if(right) score++; else missed.push(item);
+  if(locked)return; locked=true;
+  const it=deck[idx], right=choice===it.a;
+  if(right)score++; else missed.push(it);
   document.querySelectorAll('.opt').forEach(b=>{
-    b.disabled = true;
-    const txt = b.firstChild.textContent;
-    if(txt === item.a){ b.classList.add('right'); b.lastChild.textContent='✓'; }
-    else if(b===btn){ b.classList.add('wrong'); b.lastChild.textContent='✕'; }
+    b.disabled=true;
+    const txt=b.firstChild.textContent;
+    if(txt===it.a){b.classList.add('right');b.lastChild.textContent='✓';}
+    else if(b===btn){b.classList.add('wrong');b.lastChild.textContent='✕';}
   });
-  const v = document.getElementById('verdict');
-  v.className = 'verdict ' + (right?'r':'w');
-  v.textContent = right ? ['יפה מאוד.','בדיוק.','מצוין.','אתה בעניינים.'][Math.floor(Math.random()*4)]
-                        : 'לא. התשובה היא ' + item.a + '.';
-  document.getElementById('running').textContent = score+' נכונות';
+  const v=document.getElementById('verdict');
+  v.className='verdict '+(right?'r':'w');
+  v.textContent=right?['יפה מאוד.','בדיוק.','מצוין.','אתה בעניינים.'][Math.floor(Math.random()*4)]
+                     :'לא. התשובה היא '+it.a+'.';
+  document.getElementById('running').textContent=score+' נכונות';
   document.getElementById('after').classList.add('on');
 }
 
-function next(){
-  if(idx < deck.length-1){ idx++; render(); window.scrollTo({top:0,behavior:'smooth'}); }
-  else finish();
-}
+function next(){ if(idx<deck.length-1){idx++;render();window.scrollTo({top:0,behavior:'smooth'});} else finish(); }
 
 function finish(){
   document.getElementById('qpanel').classList.add('hidden');
-  const pct = Math.round(score/deck.length*100);
-  let title, sub;
-  if(pct===100){ title='מושלם. בלי טעות אחת.'; sub='אתה רשמית חלק מהמשפחה.'; }
-  else if(pct>=85){ title='מרשים מאוד.'; sub='אתה מכיר אותם כמעט כמוני.'; }
-  else if(pct>=65){ title='לא רע בכלל.'; sub='רוב המשפחה מסודרת לך בראש.'; }
-  else if(pct>=40){ title='יש עוד עבודה.'; sub='תחזור לעץ, ותן לזה עוד סיבוב.'; }
-  else { title='אוקיי, נתחיל מהתחלה.'; sub='לך תלמד את העץ, אני מחכה.'; }
-
-  let h = '<div class="big">'+score+'</div><div class="of">מתוך '+deck.length+' · '+pct+'%</div>';
-  h += '<h2>'+title+'</h2><p>'+sub+'</p>';
+  const pct=Math.round(score/deck.length*100);
+  let title,sub;
+  if(pct===100){title='מושלם. בלי טעות אחת.';sub='אתה רשמית חלק מהמשפחה.';}
+  else if(pct>=85){title='מרשים מאוד.';sub='אתה מכיר אותם כמעט כמוני.';}
+  else if(pct>=65){title='לא רע בכלל.';sub='רוב המשפחה מסודרת לך בראש.';}
+  else if(pct>=40){title='יש עוד עבודה.';sub='תחזור לעץ, ותן לזה עוד סיבוב.';}
+  else {title='אוקיי, נתחיל מהתחלה.';sub='לך תלמד את העץ, אני מחכה.';}
+  let h='<div class="big">'+score+'</div><div class="of">מתוך '+deck.length+' · '+pct+'%</div>';
+  h+='<h2>'+title+'</h2><p>'+sub+'</p>';
   if(missed.length){
-    h += '<div class="missed"><h3>מה שפספסת</h3>';
-    missed.forEach(m=>{ h += '<div>'+m.q+'<br><b>'+m.a+'</b></div>'; });
-    h += '</div>';
+    h+='<div class="missed"><h3>מה שפספסת</h3>';
+    missed.forEach(m=>{ h+='<div>'+(m.img?'<img class="av av-s" src="'+m.img+'" alt="">':'')+'<span>'+m.q+' <b>'+m.a+'</b></span></div>'; });
+    h+='</div>';
   }
-  h += '<button class="next" onclick="startQuiz()">עוד סיבוב</button>';
-  h += '<button class="next ghost" onclick="show(\'tree\')">חזרה לעץ המשפחתי</button>';
-  const sp = document.getElementById('scorepanel');
-  sp.innerHTML = h; sp.classList.remove('hidden');
+  h+='<button class="next" onclick="restart()">עוד סיבוב</button>';
+  h+='<button class="next ghost" onclick="show(\'tree\')">חזרה לעץ המשפחתי</button>';
+  const sp=document.getElementById('scorepanel');
+  sp.innerHTML=h; sp.classList.remove('hidden');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* ============ NAV ============ */
+function restart(){
+  started=false;
+  document.getElementById('scorepanel').classList.add('hidden');
+  document.getElementById('qpanel').classList.add('hidden');
+  document.getElementById('startpanel').classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ============ ניווט ============ */
 function show(which){
-  const tree = which==='tree';
-  document.getElementById('view-tree').classList.toggle('hidden', !tree);
-  document.getElementById('view-quiz').classList.toggle('hidden', tree);
-  document.getElementById('tab-tree').setAttribute('aria-selected', tree);
-  document.getElementById('tab-quiz').setAttribute('aria-selected', !tree);
-  if(!tree && !deck.length) startQuiz();
-  if(location.hash !== (tree?'':'#quiz')) history.replaceState(null,'',tree?location.pathname:'#quiz');
+  const tree=which==='tree';
+  document.getElementById('view-tree').classList.toggle('hidden',!tree);
+  document.getElementById('view-quiz').classList.toggle('hidden',tree);
+  document.getElementById('tab-tree').setAttribute('aria-selected',tree);
+  document.getElementById('tab-quiz').setAttribute('aria-selected',!tree);
+  if(!tree&&!started){
+    document.getElementById('startpanel').classList.remove('hidden');
+    document.getElementById('qpanel').classList.add('hidden');
+    document.getElementById('scorepanel').classList.add('hidden');
+  }
+  history.replaceState(null,'',tree?location.pathname:'#quiz');
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
 /* ============ פענוח ============ */
-const enc = new TextEncoder();
+const te=new TextEncoder();
 async function unlock(pass){
-  const raw = new Uint8Array(await (await fetch('data.enc',{cache:'no-store'})).arrayBuffer());
-  const salt = raw.slice(0,16), iv = raw.slice(16,28), body = raw.slice(28);
-  const base = await crypto.subtle.importKey('raw', enc.encode(pass.normalize('NFC')), 'PBKDF2', false, ['deriveKey']);
-  const key = await crypto.subtle.deriveKey(
-    {name:'PBKDF2', salt, iterations:250000, hash:'SHA-256'}, base,
-    {name:'AES-GCM', length:256}, false, ['decrypt']);
-  const plain = await crypto.subtle.decrypt({name:'AES-GCM', iv}, key, body);
-  return JSON.parse(new TextDecoder().decode(plain));
+  const raw=new Uint8Array(await (await fetch('data.enc',{cache:'no-store'})).arrayBuffer());
+  const salt=raw.slice(0,16), iv=raw.slice(16,28), body=raw.slice(28);
+  const base=await crypto.subtle.importKey('raw',te.encode(pass.normalize('NFC')),'PBKDF2',false,['deriveKey']);
+  const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:250000,hash:'SHA-256'},base,
+    {name:'AES-GCM',length:256},false,['decrypt']);
+  return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv},key,body)));
 }
 
-async function tryPass(pass, quiet){
-  const err = document.getElementById('err');
-  const btn = document.getElementById('gobtn');
-  if(!quiet){ btn.textContent = 'פותח...'; btn.disabled = true; err.textContent = ''; }
+async function tryPass(pass,quiet){
+  const err=document.getElementById('err'), btn=document.getElementById('gobtn');
+  if(!quiet){btn.textContent='פותח...';btn.disabled=true;err.textContent='';}
   try{
-    const data = await unlock(pass);
-    CLANS = data.clans; QUESTIONS = data.questions; ME = data.me; LEGEND = data.legend;
-    document.getElementById('greeting').textContent = data.greeting;
+    const d=await unlock(pass);
+    CLANS=d.clans; QUESTIONS=d.questions; PHOTOS=d.photos||{}; FACES=d.faces||[];
+    ME=d.me; LEGEND=d.legend; SOLVER=d.solver||'';
+    document.getElementById('greeting').textContent=d.greeting;
+    const n=QUESTIONS.length+FACES.filter(f=>f.name!==SOLVER).length;
+    document.getElementById('btn-full').textContent='החידון המלא — '+n+' שאלות';
+    document.getElementById('startsub').textContent='העץ פתוח לך תמיד, גם באמצע.';
     drawTree();
     document.getElementById('gate').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
-    try{ sessionStorage.setItem('fq', pass); }catch(e){}
-    if(location.hash === '#quiz') show('quiz');
+    try{sessionStorage.setItem('fq',pass);}catch(e){}
+    if(location.hash==='#quiz') show('quiz');
     return true;
   }catch(e){
-    if(!quiet){ err.textContent = 'לא נכון. נסה שוב.'; btn.textContent = 'כניסה'; btn.disabled = false;
-                document.getElementById('pw').select(); }
+    if(!quiet){err.textContent='לא נכון. נסה שוב.';btn.textContent='כניסה';btn.disabled=false;
+               document.getElementById('pw').select();}
     return false;
   }
 }
 
-document.getElementById('gobtn').onclick = ()=> tryPass(document.getElementById('pw').value);
-document.getElementById('pw').addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('gobtn').click(); });
-
+document.getElementById('gobtn').onclick=()=>tryPass(document.getElementById('pw').value);
+document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('gobtn').click();});
 (async()=>{
-  let saved = null;
-  try{ saved = sessionStorage.getItem('fq'); }catch(e){}
-  if(saved && await tryPass(saved, true)) return;
+  let saved=null; try{saved=sessionStorage.getItem('fq');}catch(e){}
+  if(saved&&await tryPass(saved,true))return;
   document.getElementById('pw').focus();
 })();
 </script>
