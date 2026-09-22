@@ -42,6 +42,7 @@ nav button[aria-selected="true"]{background:var(--brand);color:var(--on-brand);b
 .gate p{color:var(--muted);font-size:15px;margin:0 0 20px}
 .gate input{font:inherit;font-size:19px;font-weight:600;text-align:center;width:100%;
   background:var(--bg);border:1.5px solid var(--line);color:var(--ink);border-radius:14px;padding:14px;outline:none}
+.gate input{-webkit-text-security:disc;text-security:disc}
 .gate input:focus{border-color:var(--brand)}
 .gate button{font:inherit;font-size:17px;font-weight:700;cursor:pointer;width:100%;margin-top:11px;
   background:var(--brand);color:var(--on-brand);border:0;border-radius:14px;padding:14px}
@@ -58,14 +59,16 @@ nav button[aria-selected="true"]{background:var(--brand);color:var(--on-brand);b
 .dia{color:var(--line);font-size:19px;font-weight:700;align-self:center}
 .foot{text-align:center;font-size:13.5px;color:var(--muted);margin-top:12px;font-style:italic}
 .stem{width:3px;height:22px;background:var(--line);margin:16px auto 0;border-radius:2px}
-.branches{display:grid;gap:14px;margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
-.branches.narrow{grid-template-columns:repeat(auto-fit,minmax(250px,1fr));max-width:840px;margin-inline:auto}
-.branch{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:15px 13px}
+.branches{display:grid;gap:11px;margin-top:16px;grid-template-columns:repeat(var(--cols,4),1fr)}
+.branches.narrow{max-width:860px;margin-inline:auto}
+@media(max-width:1000px){.branches{grid-template-columns:repeat(2,1fr)!important}}
+@media(max-width:560px){.branches{grid-template-columns:1fr!important}}
+.branch{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:14px 10px}
 .branch.mine{border-color:var(--gold);background:var(--gold-soft)}
 .branch h3{margin:0;font-size:16.5px;font-weight:800;color:var(--brand);text-align:center}
 .loc{text-align:center;font-size:12.5px;color:var(--muted);margin-top:3px;font-weight:600}
 .pair{display:flex;gap:7px;justify-content:center;margin-top:11px;flex-wrap:wrap}
-.p{background:var(--brand-soft);border-radius:12px;padding:5px 11px 5px 6px;font-size:15px;font-weight:600;
+.p{background:var(--brand-soft);border-radius:12px;padding:4px 10px 4px 5px;font-size:14.5px;font-weight:600;
    display:inline-flex;align-items:center;gap:6px}
 .p.blood{background:var(--brand);color:var(--on-brand)}
 .kids{margin-top:12px;border-top:1px dashed var(--line);padding-top:11px;display:flex;flex-direction:column;gap:8px}
@@ -74,7 +77,11 @@ nav button[aria-selected="true"]{background:var(--brand);color:var(--on-brand);b
 .kid i{font-style:normal;color:var(--muted);font-size:13px;display:inline-flex;align-items:center;gap:4px}
 .kid .me{background:var(--gold-soft);border:1px solid var(--gold);border-radius:10px;padding:2px 8px;
   display:inline-flex;align-items:center;gap:5px}
-.nin{font-size:12px;color:var(--muted);text-align:center;margin-top:-4px;letter-spacing:.2px}
+.nin{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;position:relative;
+  margin:-3px 0 1px;padding-top:7px}
+.nin::before{content:'';position:absolute;top:0;inset-inline-start:50%;width:1px;height:6px;background:var(--line)}
+.nin span{font-size:11.5px;font-weight:600;color:var(--muted);background:var(--card);
+  border:1px solid var(--line);border-radius:99px;padding:1px 9px;line-height:1.75}
 .bnote{font-size:12.5px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.5}
 .legend{text-align:center;font-size:13.5px;color:var(--muted);margin-top:8px;padding:0 6px}
 .legend b{color:var(--brand)}
@@ -136,7 +143,7 @@ nav button[aria-selected="true"]{background:var(--brand);color:var(--on-brand);b
 
 <div class="gate" id="gate">
   <p>החידון נעול. הסיסמה היא מילה אחת שכל המשפחה מכירה.</p>
-  <input id="pw" type="password" inputmode="text" autocomplete="off" placeholder="הסיסמה" dir="rtl">
+  <input id="pw" type="text" lang="he" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="הסיסמה" dir="rtl">
   <button id="gobtn" type="button">כניסה</button>
   <div class="err" id="err"></div>
 </div>
@@ -186,7 +193,7 @@ function drawTree(){
   CLANS.forEach((c,ci)=>{
     h+='<div class="clan"><div class="clan-name">'+c.name+'</div><div class="clan-note">'+c.note+'</div><div class="roots">';
     h+=c.roots.map((r,ri)=>'<div class="root">'+img('r:'+ci+':'+ri,'av-l')+'<div class="n">'+r.n+'</div><div class="m">'+r.m+'</div></div>').join('<div class="dia">◆</div>');
-    h+='</div><div class="foot">'+c.foot+'</div><div class="stem"></div><div class="branches'+(c.narrow?' narrow':'')+'">';
+    h+='</div><div class="foot">'+c.foot+'</div><div class="stem"></div><div class="branches'+(c.narrow?' narrow':'')+'" style="--cols:'+c.branches.length+'">';
     c.branches.forEach((b,bi)=>{
       h+='<div class="branch'+(b.mine?' mine':'')+'"><h3>'+b.t+'</h3>'+(b.loc?'<div class="loc">📍 '+b.loc+'</div>':'')+'<div class="pair">';
       h+=b.pair.map((p,pi)=>'<span class="p'+(p[1]?' blood':'')+'">'+img('p:'+ci+':'+bi+':'+pi,'av-m')+'<span>'+p[0]+'</span></span>').join('');
@@ -197,7 +204,7 @@ function drawTree(){
           const inner=img('k:'+ci+':'+bi+':'+ki,'av-s')+'<b>'+k[0]+'</b>'+
             (k[1]?'<i>· '+img('s:'+ci+':'+bi+':'+ki,'av-x')+k[1]+'</i>':'');
           h+='<div class="kid">'+(k[0]===ME?'<span class="me">'+inner+'</span>':inner)+'</div>';
-          if(k[2]&&k[2].length) h+='<div class="nin">↳ '+k[2].join(' · ')+'</div>';
+          if(k[2]&&k[2].length) h+='<div class="nin">'+k[2].map(x=>'<span>'+x+'</span>').join('')+'</div>';
         });
         h+='</div>';
       }
@@ -372,8 +379,25 @@ async function tryPass(pass,quiet){
   }
 }
 
-document.getElementById('gobtn').onclick=()=>tryPass(document.getElementById('pw').value);
-document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('gobtn').click();});
+// מקלדת אנגלית במקום עברית — מיפוי לפי מיקום המקשים
+const KB={q:'/',w:"'",e:'ק',r:'ר',t:'א',y:'ט',u:'ו',i:'ן',o:'ם',p:'פ',
+  a:'ש',s:'ד',d:'ג',f:'כ',g:'ע',h:'י',j:'ח',k:'ל',l:'ך',
+  z:'ז',x:'ס',c:'ב',v:'ה',b:'נ',n:'מ',m:'צ'};
+const toHeb=t=>t.toLowerCase().split('').map(c=>KB[c]||c).join('');
+const TRANS={mishpacha:'משפחה',mishpaha:'משפחה',mishpachah:'משפחה',michpacha:'משפחה',mishpakha:'משפחה'};
+
+async function submitPass(){
+  const raw=document.getElementById('pw').value.trim();
+  if(!raw) return;
+  const tries=[raw, toHeb(raw), TRANS[raw.toLowerCase()]].filter(Boolean);
+  const btn=document.getElementById('gobtn'), err=document.getElementById('err');
+  btn.textContent='פותח...'; btn.disabled=true; err.textContent='';
+  for(const t of tries){ if(await tryPass(t,true)) return; }
+  err.textContent='לא נכון. נסה שוב.'; btn.textContent='כניסה'; btn.disabled=false;
+  document.getElementById('pw').select();
+}
+document.getElementById('gobtn').onclick=submitPass;
+document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')submitPass();});
 (async()=>{
   let saved=null; try{saved=sessionStorage.getItem('fq');}catch(e){}
   if(saved&&await tryPass(saved,true))return;
