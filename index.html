@@ -215,9 +215,15 @@ function textPool(){
 }
 function picPool(){
   const pool=FACES.filter(f=>f.name!==SOLVER);
+  const gen=k=> k[0]==='r'?1 : k[0]==='p'?2 : 3;
   return pool.map(f=>{
-    const others=shuffle(pool.filter(o=>o.name!==f.name)).slice(0,3).map(o=>o.name);
-    return {q:'מי זה בתמונה?',img:PHOTOS[f.key],a:f.name,opts:shuffle([f.name,...others])};
+    // מסיחים מאותו מגדר, ובעדיפות מאותו דור
+    const same=pool.filter(o=>o.name!==f.name && o.g===f.g);
+    const near=shuffle(same.filter(o=>gen(o.key)===gen(f.key)));
+    const far =shuffle(same.filter(o=>gen(o.key)!==gen(f.key)));
+    const any =shuffle(pool.filter(o=>o.name!==f.name && o.g!==f.g));
+    const picks=near.concat(far,any).slice(0,3).map(o=>o.name);
+    return {q:'מי זה בתמונה?',img:PHOTOS[f.key],a:f.name,opts:shuffle([f.name,...picks])};
   });
 }
 
