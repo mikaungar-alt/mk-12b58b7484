@@ -74,6 +74,7 @@ nav button[aria-selected="true"]{background:var(--brand);color:var(--on-brand);b
 .kid i{font-style:normal;color:var(--muted);font-size:13px;display:inline-flex;align-items:center;gap:4px}
 .kid .me{background:var(--gold-soft);border:1px solid var(--gold);border-radius:10px;padding:2px 8px;
   display:inline-flex;align-items:center;gap:5px}
+.nin{font-size:12px;color:var(--muted);text-align:center;margin-top:-4px;letter-spacing:.2px}
 .bnote{font-size:12.5px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.5}
 .legend{text-align:center;font-size:13.5px;color:var(--muted);margin-top:8px;padding:0 6px}
 .legend b{color:var(--brand)}
@@ -153,8 +154,10 @@ nav button[aria-selected="true"]{background:var(--brand);color:var(--on-brand);b
       <h2>מוכן?</h2>
       <p id="startsub"></p>
       <button class="next" onclick="startQuiz('full')" id="btn-full"></button>
+      <button class="next ghost" onclick="startQuiz('or')" id="btn-or"></button>
+      <button class="next ghost" onclick="startQuiz('or4')" id="btn-or4"></button>
       <button class="next ghost" onclick="startQuiz('photos')" id="btn-photos"></button>
-      <button class="next ghost" onclick="startQuiz('short')">סיבוב קצר — 20 שאלות מעורבבות</button>
+      <button class="next ghost" onclick="startQuiz('short')">חידון קצר — 20 שאלות</button>
     </div>
     <div class="panel hidden" id="qpanel">
       <div class="meta"><span id="counter"></span><span id="running"></span></div>
@@ -194,6 +197,7 @@ function drawTree(){
           const inner=img('k:'+ci+':'+bi+':'+ki,'av-s')+'<b>'+k[0]+'</b>'+
             (k[1]?'<i>· '+img('s:'+ci+':'+bi+':'+ki,'av-x')+k[1]+'</i>':'');
           h+='<div class="kid">'+(k[0]===ME?'<span class="me">'+inner+'</span>':inner)+'</div>';
+          if(k[2]&&k[2].length) h+='<div class="nin">↳ '+k[2].join(' · ')+'</div>';
         });
         h+='</div>';
       }
@@ -211,7 +215,7 @@ const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(M
 let deck=[], idx=0, score=0, missed=[], locked=false, started=false;
 
 function textPool(){
-  return QUESTIONS.map(q=>({q:q[0],a:q[1],opts:shuffle([q[1],...q[2]])}));
+  return QUESTIONS.map(q=>({q:q.q,a:q.a,opts:shuffle([q.a,...q.d]),side:q.side,g4:q.g4}));
 }
 function picPool(){
   const pool=FACES.filter(f=>f.name!==SOLVER);
@@ -223,14 +227,16 @@ function picPool(){
     const far =shuffle(same.filter(o=>gen(o.key)!==gen(f.key)));
     const any =shuffle(pool.filter(o=>o.name!==f.name && o.g!==f.g));
     const picks=near.concat(far,any).slice(0,3).map(o=>o.name);
-    return {q:'מי זה בתמונה?',img:PHOTOS[f.key],a:f.name,opts:shuffle([f.name,...picks])};
+    return {q:'מי זה בתמונה?',img:PHOTOS[f.key],a:f.name,opts:shuffle([f.name,...picks]),side:f.side,g4:false};
   });
 }
 
 function startQuiz(mode){
-  if(mode==='photos') deck=shuffle(picPool());
-  else { const all=shuffle(textPool().concat(picPool()));
-         deck = mode==='short' ? all.slice(0,20) : all; }
+  const t=textPool(), p=picPool();
+  if(mode==='photos')   deck=shuffle(p);
+  else if(mode==='or')  deck=shuffle(t.filter(x=>x.side==='or'&&!x.g4).concat(p.filter(x=>x.side==='or')));
+  else if(mode==='or4') deck=shuffle(t.filter(x=>x.side==='or').concat(p.filter(x=>x.side==='or')));
+  else { const all=shuffle(t.concat(p)); deck = mode==='short' ? all.slice(0,20) : all; }
   idx=0;score=0;missed=[];locked=false;started=true;
   document.getElementById('startpanel').classList.add('hidden');
   document.getElementById('scorepanel').classList.add('hidden');
@@ -345,9 +351,13 @@ async function tryPass(pass,quiet){
     CLANS=d.clans; QUESTIONS=d.questions; PHOTOS=d.photos||{}; FACES=d.faces||[];
     ME=d.me; LEGEND=d.legend; SOLVER=d.solver||'';
     document.getElementById('greeting').textContent=d.greeting;
-    const np=FACES.filter(f=>f.name!==SOLVER).length, n=QUESTIONS.length+np;
-    document.getElementById('btn-full').textContent='החידון המלא — '+n+' שאלות';
-    document.getElementById('btn-photos').textContent='חידון תמונות — '+np+' פרצופים';
+    const nt=QUESTIONS.length, np=FACES.filter(f=>f.name!==SOLVER).length;
+    const orT=QUESTIONS.filter(q=>q.side==='or'), orP=FACES.filter(f=>f.name!==SOLVER&&f.side==='or').length;
+    const set=(id,txt)=>document.getElementById(id).textContent=txt;
+    set('btn-full','כל השאלות — '+(nt+np));
+    set('btn-or','משפחת אור — '+(orT.filter(q=>!q.g4).length+orP)+' שאלות');
+    set('btn-or4','משפחת אור כולל נינים — '+(orT.length+orP)+' שאלות');
+    set('btn-photos','רק תמונות — '+np+' פרצופים');
     document.getElementById('startsub').textContent='העץ פתוח לך תמיד, גם באמצע.';
     drawTree();
     document.getElementById('gate').classList.add('hidden');
