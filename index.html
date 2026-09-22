@@ -49,28 +49,6 @@ nav button[aria-selected="true"]{background:var(--brand);color:var(--on-brand);b
 .gate .err{color:var(--bad);font-size:14.5px;font-weight:600;margin-top:13px;min-height:20px}
 
 
-/* ---------- טלפון ---------- */
-@media(max-width:600px){
-  .wrap{padding:14px 12px 60px}
-  header{padding:18px 0 10px}
-  .clan{padding:20px 11px;border-radius:18px;margin-bottom:16px}
-  .roots{flex-direction:column;align-items:center;gap:0;margin-top:16px}
-  .root{width:100%;max-width:290px;min-width:0;padding:13px 16px}
-  .dia{font-size:0;width:2px;height:18px;background:var(--line);border-radius:2px;margin:7px 0;align-self:center}
-  .stem{height:18px;margin-top:13px}
-  .branches{gap:10px;margin-top:13px}
-  .branch{padding:15px 12px}
-  .branch h3{font-size:17px}
-  .p{font-size:15px;padding:5px 11px 5px 5px}
-  .kid{font-size:15px}
-  .bnote{font-size:12.5px}
-  .foot{font-size:13px}
-  nav{margin:14px 0 18px;gap:6px}
-  nav button{padding:10px 18px;font-size:15px}
-  .panel{padding:20px 15px;border-radius:18px}
-  .gate{margin:26px auto;padding:28px 20px}
-}
-
 /* ---------- עץ ---------- */
 .clan{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 18px;margin-bottom:22px}
 .clan-name{text-align:center;font-size:clamp(21px,4.5vw,27px);font-weight:800;color:var(--brand)}
@@ -154,6 +132,50 @@ nav button[aria-selected="true"]{background:var(--brand);color:var(--on-brand);b
 .missed div{font-size:14.5px;padding:9px 0;border-bottom:1px dashed var(--line);display:flex;align-items:center;gap:9px}
 .missed b{color:var(--brand)}
 .hidden{display:none}
+
+/* ---------- טלפון ---------- */
+@media(max-width:600px){
+  .wrap{padding:12px 10px 56px}
+  header{padding:16px 0 8px}
+  nav{margin:14px 0 16px;gap:6px}
+  nav button{padding:10px 18px;font-size:15px}
+  .clan{padding:18px 10px;border-radius:18px;margin-bottom:14px}
+  .clan-name{font-size:22px}
+
+  /* סבא וסבתא — תמונה בצד, טקסט לידה */
+  .roots{flex-direction:column;align-items:stretch;gap:0;margin-top:14px}
+  .root{width:100%;max-width:none;min-width:0;display:flex;align-items:center;gap:12px;
+        text-align:start;padding:11px 13px;border-radius:14px}
+  .av-l{width:50px;height:50px;margin:0;border-width:2px}
+  .root .n{font-size:17.5px;line-height:1.3}
+  .root .m{font-size:12px;margin-top:1px}
+  .dia{font-size:0;width:2px;height:14px;background:var(--line);border-radius:2px;
+       margin:5px 0;align-self:center}
+  .foot{font-size:12.5px;margin-top:9px}
+  .stem{height:16px;margin-top:11px}
+
+  /* ענפים — רשימה מיושרת לימין, לא ערימה ממורכזת */
+  .branches{gap:9px;margin-top:11px}
+  .branch{padding:13px 12px;border-radius:14px}
+  .branch h3{font-size:16.5px}
+  .loc{font-size:12px}
+  .pair{flex-direction:column;align-items:stretch;gap:5px;margin-top:10px}
+  .p{width:100%;justify-content:flex-start;border-radius:11px;padding:5px 9px;font-size:15px;gap:9px}
+  .kids{gap:7px;padding-top:9px}
+  .kid{justify-content:flex-start;gap:8px;font-size:15px;padding-inline-start:4px}
+  .kid i{gap:6px}
+  .kid .me{padding:3px 9px}
+  .nin{justify-content:flex-start;padding:0;margin:1px 0 3px;
+       padding-inline-start:43px;gap:5px}
+  .nin::before{display:none}
+  .nin span{font-size:11.5px;padding:1px 9px}
+  .bnote{text-align:start;font-size:12px;padding-inline-start:4px;margin-top:11px}
+  .legend{font-size:12.5px;line-height:1.7}
+
+  .panel{padding:19px 14px;border-radius:18px}
+  .gate{margin:24px auto;padding:26px 18px}
+}
+
 </style>
 </head>
 <body>
