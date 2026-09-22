@@ -153,7 +153,8 @@ nav button[aria-selected="true"]{background:var(--brand);color:var(--on-brand);b
       <h2>מוכן?</h2>
       <p id="startsub"></p>
       <button class="next" onclick="startQuiz('full')" id="btn-full"></button>
-      <button class="next ghost" onclick="startQuiz('short')">סיבוב קצר — 20 שאלות</button>
+      <button class="next ghost" onclick="startQuiz('photos')" id="btn-photos"></button>
+      <button class="next ghost" onclick="startQuiz('short')">סיבוב קצר — 20 שאלות מעורבבות</button>
     </div>
     <div class="panel hidden" id="qpanel">
       <div class="meta"><span id="counter"></span><span id="running"></span></div>
@@ -209,19 +210,21 @@ function drawTree(){
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 let deck=[], idx=0, score=0, missed=[], locked=false, started=false;
 
-function buildPool(){
-  const text=QUESTIONS.map(q=>({q:q[0],a:q[1],opts:shuffle([q[1],...q[2]])}));
+function textPool(){
+  return QUESTIONS.map(q=>({q:q[0],a:q[1],opts:shuffle([q[1],...q[2]])}));
+}
+function picPool(){
   const pool=FACES.filter(f=>f.name!==SOLVER);
-  const pics=pool.map(f=>{
+  return pool.map(f=>{
     const others=shuffle(pool.filter(o=>o.name!==f.name)).slice(0,3).map(o=>o.name);
     return {q:'מי זה בתמונה?',img:PHOTOS[f.key],a:f.name,opts:shuffle([f.name,...others])};
   });
-  return text.concat(pics);
 }
 
 function startQuiz(mode){
-  const all=shuffle(buildPool());
-  deck = mode==='short' ? all.slice(0,20) : all;
+  if(mode==='photos') deck=shuffle(picPool());
+  else { const all=shuffle(textPool().concat(picPool()));
+         deck = mode==='short' ? all.slice(0,20) : all; }
   idx=0;score=0;missed=[];locked=false;started=true;
   document.getElementById('startpanel').classList.add('hidden');
   document.getElementById('scorepanel').classList.add('hidden');
@@ -336,8 +339,9 @@ async function tryPass(pass,quiet){
     CLANS=d.clans; QUESTIONS=d.questions; PHOTOS=d.photos||{}; FACES=d.faces||[];
     ME=d.me; LEGEND=d.legend; SOLVER=d.solver||'';
     document.getElementById('greeting').textContent=d.greeting;
-    const n=QUESTIONS.length+FACES.filter(f=>f.name!==SOLVER).length;
+    const np=FACES.filter(f=>f.name!==SOLVER).length, n=QUESTIONS.length+np;
     document.getElementById('btn-full').textContent='החידון המלא — '+n+' שאלות';
+    document.getElementById('btn-photos').textContent='חידון תמונות — '+np+' פרצופים';
     document.getElementById('startsub').textContent='העץ פתוח לך תמיד, גם באמצע.';
     drawTree();
     document.getElementById('gate').classList.add('hidden');
